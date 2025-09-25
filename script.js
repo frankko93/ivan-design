@@ -4,6 +4,130 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    // YouTube Player API Integration
+    let youtubePlayer = null;
+    const unmuteButton = document.getElementById('unmute-btn');
+    let isMuted = true;
+
+    // Initialize button state
+    unmuteButton.classList.add('muted');
+
+    // YouTube API ready function
+    window.onYouTubeIframeAPIReady = function() {
+        youtubePlayer = new YT.Player('youtube-player', {
+            width: '100%',
+            height: '100%',
+            videoId: 'UZrh5BDQKlw', // Your video ID
+            playerVars: {
+                autoplay: 1,
+                mute: 1,
+                loop: 1,
+                playlist: 'UZrh5BDQKlw',
+                controls: 1,
+                showinfo: 0,
+                rel: 0,
+                modestbranding: 1,
+                iv_load_policy: 3
+            },
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        // Player is ready
+        console.log('YouTube player ready');
+    }
+
+    function onPlayerStateChange(event) {
+        // Handle player state changes if needed
+    }
+
+    // Unmute Button Functionality with real YouTube control
+    unmuteButton.addEventListener('click', function() {
+        if (!youtubePlayer) {
+            showNotification('Player no está listo aún...');
+            return;
+        }
+
+        if (isMuted) {
+            // Unmute the video
+            youtubePlayer.unMute();
+            isMuted = false;
+            
+            // Switch to unmuted state
+            this.classList.remove('muted');
+            this.classList.add('unmuted');
+            this.querySelector('.unmute-text').textContent = 'AUDIO ON';
+            
+            // Show notification
+            showNotification('🔊 ¡Audio activado! Disfruta el video');
+            
+            // Add visual feedback
+            this.style.transform = 'translate(-50%, -50%) translateY(-2px) scale(1.05)';
+            setTimeout(() => {
+                this.style.transform = 'translate(-50%, -50%)';
+            }, 150);
+
+            // Hide button after 3 seconds
+            setTimeout(() => {
+                this.style.opacity = '0';
+                this.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                this.style.pointerEvents = 'none';
+                
+                setTimeout(() => {
+                    this.style.display = 'none';
+                }, 400);
+            }, 3000);
+            
+        } else {
+            // Mute the video (in case they want to mute again)
+            youtubePlayer.mute();
+            isMuted = true;
+            
+            // Switch to muted state
+            this.classList.remove('unmuted');
+            this.classList.add('muted');
+            this.querySelector('.unmute-text').textContent = 'DESMUTEAR';
+            
+            // Show notification
+            showNotification('🔇 Video silenciado');
+            
+            // Add visual feedback
+            this.style.transform = 'translate(-50%, -50%) translateY(-2px) scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'translate(-50%, -50%)';
+            }, 150);
+        }
+        
+        // Add ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        `;
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+        ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            if (this.contains(ripple)) {
+                this.removeChild(ripple);
+            }
+        }, 600);
+    });
+
     // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
@@ -239,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// CSS animations for logo
+// CSS animations for logo and ripple
 const style = document.createElement('style');
 style.textContent = `
     @keyframes logoSpin {
@@ -252,6 +376,17 @@ style.textContent = `
         0% { transform: scale(1); }
         50% { transform: scale(1.1); }
         100% { transform: scale(1); }
+    }
+    
+    @keyframes ripple {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(2);
+            opacity: 0;
+        }
     }
     
 `;

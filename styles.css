@@ -147,55 +147,159 @@ body {
     padding: 0 15px;
 }
 
-.video-placeholder {
+.video-container {
     width: 100%;
-    max-width: clamp(400px, 80vw, 600px);
-    height: clamp(200px, 30vw, 300px);
-    background: rgba(255,255,255,0.1);
-    border-radius: clamp(15px, 2vw, 20px);
+    max-width: clamp(500px, 85vw, 1200px);
     margin: clamp(30px, 5vw, 50px) auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    padding-bottom: 35%; /* More cinematic aspect ratio - wider than tall */
+    height: 0;
+    border-radius: clamp(15px, 2vw, 20px);
+    overflow: hidden;
     border: 2px solid var(--primary-red-alpha-40);
     backdrop-filter: blur(10px);
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.video-placeholder:hover {
-    background: rgba(220,38,38,0.1);
+.video-container:hover {
     border-color: var(--primary-red);
     transform: translateY(-5px);
     box-shadow: 0 20px 40px var(--primary-red-alpha-30);
 }
 
-.video-text {
-    color: var(--primary-red);
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
+.video-container iframe,
+#youtube-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
 }
 
-.play-button {
-    width: 80px;
-    height: 80px;
+#youtube-player iframe {
+    border-radius: inherit;
+}
+
+/* Unmute Button Styles */
+.unmute-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
-    border-radius: 50%;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 15px 40px var(--primary-red-alpha-50);
+    backdrop-filter: blur(15px);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    z-index: 20;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: white;
+    min-width: 160px;
+    justify-content: center;
+    opacity: 0.95;
+}
+
+.unmute-button.fade-out {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    pointer-events: none;
+    transition: all 0.4s ease-out;
+}
+
+.unmute-button:hover {
+    transform: translate(-50%, -50%) translateY(-3px) scale(1.05);
+    box-shadow: 0 20px 50px var(--primary-red-alpha-60);
+    background: linear-gradient(135deg, var(--primary-red-lighter), var(--primary-red));
+    border-color: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+}
+
+.unmute-button:active {
+    transform: translate(-50%, -50%) translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+.unmute-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    color: #fff;
+}
+
+.unmute-icon svg {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.unmute-text {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
 
-.play-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 10px 30px var(--primary-red-alpha-50);
+/* Muted state (default) */
+.unmute-button.muted .sound-off {
+    display: block;
+    animation: mutedPulse 2s ease-in-out infinite;
 }
+
+.unmute-button.muted .sound-on {
+    display: none;
+}
+
+.unmute-button.muted .unmute-text::after {
+    content: " 🔇";
+    animation: mutedBounce 1.5s ease-in-out infinite;
+}
+
+/* Unmuted state */
+.unmute-button.unmuted .sound-off {
+    display: none;
+}
+
+.unmute-button.unmuted .sound-on {
+    display: block;
+    animation: soundWave 1.5s ease-in-out infinite;
+}
+
+.unmute-button.unmuted .unmute-text {
+    color: #fecaca;
+}
+
+.unmute-button.unmuted .unmute-text::after {
+    content: " 🔊";
+    animation: soundBounce 1s ease-in-out infinite;
+}
+
+.unmute-button.unmuted {
+    background: linear-gradient(135deg, var(--primary-red-lighter), var(--primary-red-lightest));
+    box-shadow: 0 8px 25px var(--primary-red-alpha-50);
+}
+
+.unmute-button.unmuted:hover {
+    background: linear-gradient(135deg, var(--primary-red-lightest), white);
+    color: var(--primary-red);
+    box-shadow: 0 15px 35px var(--primary-red-alpha-70);
+}
+
 
 .cta-button {
     background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
@@ -314,26 +418,31 @@ body {
 
 .testimonials-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: clamp(25px, 4vw, 50px);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: clamp(25px, 4vw, 40px);
     margin-top: clamp(30px, 6vw, 60px);
-}
-
-.testimonial-pill:nth-child(3) {
-    grid-column: 1 / -1;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .testimonial-pill {
     display: flex;
     align-items: center;
     background: rgba(255, 240, 235, 0.95);
-    border-radius: 80px;
-    gap: 40px;
+    border-radius: clamp(60px, 8vw, 80px);
+    gap: clamp(25px, 4vw, 40px);
     transition: all 0.3s ease;
-    min-height: 140px;
+    min-height: clamp(120px, 15vw, 140px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.testimonial-pill:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .testimonial-pill:hover {
@@ -343,8 +452,8 @@ body {
 }
 
 .testimonial-avatar {
-    width: 140px;
-    height: 140px;
+    width: clamp(80px, 12vw, 140px);
+    height: clamp(80px, 12vw, 140px);
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     flex-shrink: 0;
@@ -359,7 +468,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 36px;
+    font-size: clamp(24px, 4vw, 36px);
     color: #666;
 }
 
@@ -419,10 +528,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(30px, 8vw, 80px);
-    max-width: 500px;
+    gap: clamp(20px, 6vw, 60px);
+    max-width: 600px;
     margin: 0 auto;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .contact-card {
@@ -445,10 +554,11 @@ body {
 }
 
 .social-icon {
-    width: clamp(48px, 8vw, 72px);
-    height: clamp(48px, 8vw, 72px);
+    width: clamp(56px, 9vw, 84px);
+    height: clamp(56px, 9vw, 84px);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+    animation: subtlePulse 3s ease-in-out infinite;
 }
 
 .social-label {
@@ -464,65 +574,70 @@ body {
 
 /* Instagram specific styling */
 .contact-card[data-social="instagram"] .social-icon {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    filter: drop-shadow(0 8px 20px rgba(225, 48, 108, 0.3)) drop-shadow(0 0 0 rgba(225, 48, 108, 0.1));
+    animation: instagramGlow 4s ease-in-out infinite;
 }
 
 .contact-card[data-social="instagram"] .social-label {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: #E4405F;
+    text-shadow: 0 2px 8px rgba(225, 48, 108, 0.3);
 }
 
 .contact-card[data-social="instagram"]:hover .social-icon {
-    transform: scale(1.2) rotate(8deg);
-    filter: drop-shadow(0 8px 25px rgba(225, 48, 108, 0.5));
+    transform: scale(1.25) rotate(8deg);
+    filter: drop-shadow(0 12px 30px rgba(225, 48, 108, 0.6)) drop-shadow(0 0 20px rgba(225, 48, 108, 0.4));
+    animation: none;
+}
+
+.contact-card[data-social="instagram"]:hover .social-label {
+    color: #C13584;
+    text-shadow: 0 3px 12px rgba(193, 53, 132, 0.5);
 }
 
 /* WhatsApp specific styling */
 .contact-card[data-social="whatsapp"] .social-icon {
     color: #25D366;
+    filter: drop-shadow(0 8px 20px rgba(37, 211, 102, 0.3)) drop-shadow(0 0 0 rgba(37, 211, 102, 0.1));
+    animation: whatsappPulse 3.5s ease-in-out infinite;
 }
 
 .contact-card[data-social="whatsapp"] .social-label {
     color: #25D366;
+    text-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
 }
 
 .contact-card[data-social="whatsapp"]:hover .social-icon {
-    transform: scale(1.2) rotate(-8deg);
+    transform: scale(1.25) rotate(-8deg);
     color: #128C7E;
-    filter: drop-shadow(0 8px 25px rgba(37, 211, 102, 0.5));
+    filter: drop-shadow(0 12px 30px rgba(37, 211, 102, 0.6)) drop-shadow(0 0 20px rgba(37, 211, 102, 0.4));
+    animation: none;
 }
 
 .contact-card[data-social="whatsapp"]:hover .social-label {
     color: #128C7E;
+    text-shadow: 0 3px 12px rgba(18, 140, 126, 0.5);
 }
 
 /* TikTok specific styling */
 .contact-card[data-social="tiktok"] .social-icon {
-    background: linear-gradient(45deg, #FF0050, #00F2EA);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    filter: drop-shadow(0 8px 20px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 0 rgba(0, 242, 234, 0.2));
+    animation: tiktokShimmer 2.8s ease-in-out infinite;
 }
 
 .contact-card[data-social="tiktok"] .social-label {
-    background: linear-gradient(45deg, #FF0050, #00F2EA);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: #FF0050;
+    text-shadow: 0 2px 8px rgba(255, 0, 80, 0.3);
 }
 
 .contact-card[data-social="tiktok"]:hover .social-icon {
-    transform: scale(1.2) rotate(8deg);
-    filter: drop-shadow(0 8px 25px rgba(255, 0, 80, 0.5));
+    transform: scale(1.25) rotate(8deg);
+    filter: drop-shadow(0 12px 30px rgba(255, 0, 80, 0.6)) drop-shadow(0 0 20px rgba(0, 242, 234, 0.4));
+    animation: none;
+}
+
+.contact-card[data-social="tiktok"]:hover .social-label {
+    color: #000000;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* General hover effects */
@@ -594,6 +709,83 @@ body {
     }
 }
 
+@keyframes subtlePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+@keyframes instagramGlow {
+    0%, 100% {
+        filter: drop-shadow(0 8px 20px rgba(225, 48, 108, 0.3)) drop-shadow(0 0 0 rgba(225, 48, 108, 0.1));
+    }
+    50% {
+        filter: drop-shadow(0 8px 20px rgba(225, 48, 108, 0.5)) drop-shadow(0 0 15px rgba(225, 48, 108, 0.3));
+    }
+}
+
+@keyframes whatsappPulse {
+    0%, 100% {
+        filter: drop-shadow(0 8px 20px rgba(37, 211, 102, 0.3)) drop-shadow(0 0 0 rgba(37, 211, 102, 0.1));
+    }
+    50% {
+        filter: drop-shadow(0 8px 20px rgba(37, 211, 102, 0.5)) drop-shadow(0 0 12px rgba(37, 211, 102, 0.3));
+    }
+}
+
+@keyframes tiktokShimmer {
+    0%, 100% {
+        filter: drop-shadow(0 8px 20px rgba(255, 0, 80, 0.3)) drop-shadow(0 0 0 rgba(0, 242, 234, 0.2));
+    }
+    50% {
+        filter: drop-shadow(0 8px 20px rgba(255, 0, 80, 0.5)) drop-shadow(0 0 15px rgba(0, 242, 234, 0.4));
+    }
+}
+
+/* Unmute Button Animations */
+@keyframes mutedPulse {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes soundWave {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+@keyframes mutedBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes soundBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-1px) scale(1.1);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .about-content {
@@ -612,10 +804,11 @@ body {
         background-position: center top;
     }
     
-    .testimonial-pill:nth-child(3) {
-        grid-column: 1 / -1;
-        max-width: 600px;
-        margin: 0 auto;
+    .testimonials-container {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(25px, 4vw, 40px);
+        align-items: center;
     }
     
     .testimonial-pill {
@@ -624,7 +817,13 @@ body {
         padding: clamp(25px, 4vw, 35px);
         gap: clamp(20px, 3vw, 30px);
         min-height: auto;
-        border-radius: clamp(50px, 8vw, 70px);
+        max-width: clamp(400px, 90vw, 600px);
+    }
+    
+    .testimonial-pill:nth-child(3) {
+        grid-column: unset;
+        max-width: clamp(400px, 90vw, 600px);
+        margin: 0;
     }
     
     .footer {
@@ -635,6 +834,23 @@ body {
     .footer-logo-img {
         width: clamp(18rem, 30vw, 22rem);
         height: clamp(9rem, 15vw, 11rem);
+    }
+    
+    .unmute-button {
+        padding: 12px 18px;
+        font-size: 11px;
+        min-width: 130px;
+        transform: translate(-50%, -50%);
+    }
+    
+    .unmute-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .unmute-text {
+        font-size: 10px;
+        letter-spacing: 0.6px;
     }
 }
 
@@ -649,9 +865,25 @@ body {
         background-size: cover;
     }
     
+    .testimonials-container {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(20px, 3vw, 30px);
+        align-items: center;
+    }
+    
+    .testimonial-pill {
+        flex-direction: column;
+        text-align: center;
+        padding: clamp(20px, 3vw, 25px);
+        gap: clamp(15px, 2vw, 20px);
+        min-height: auto;
+        max-width: clamp(350px, 95vw, 500px);
+    }
+    
     .testimonial-pill:nth-child(3) {
-        grid-column: 1 / -1;
-        max-width: 100%;
+        grid-column: unset;
+        max-width: clamp(350px, 95vw, 500px);
         margin: 0;
     }
     
@@ -672,5 +904,23 @@ body {
     .footer-logo-img {
         width: clamp(10rem, 20vw, 14rem);
         height: clamp(5rem, 10vw, 7rem);
+    }
+    
+    .unmute-button {
+        padding: 10px 14px;
+        font-size: 10px;
+        min-width: 110px;
+        border-radius: 40px;
+        transform: translate(-50%, -50%);
+    }
+    
+    .unmute-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .unmute-text {
+        font-size: 9px;
+        letter-spacing: 0.5px;
     }
 }
