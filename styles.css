@@ -788,6 +788,12 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .video-container {
+        max-width: clamp(600px, 95vw, 1000px); /* Increased from 85vw to 95vw for larger video */
+        padding-bottom: 40%; /* Increased from 35% for better height on mobile */
+        margin: clamp(25px, 4vw, 40px) auto;
+    }
+    
     .about-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -855,6 +861,12 @@ body {
 }
 
 @media (max-width: 480px) {
+    .video-container {
+        max-width: clamp(350px, 98vw, 500px); /* Even larger on very small screens */
+        padding-bottom: 45%; /* Increased height ratio for better proportions on small screens */
+        margin: clamp(20px, 3vw, 35px) auto;
+    }
+    
     .container {
         padding: 0 15px;
     }
