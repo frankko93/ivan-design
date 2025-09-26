@@ -1,3 +1,20 @@
+/* Custom Fonts */
+@font-face {
+    font-family: 'Designer';
+    src: url('fonts/Designer.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aero';
+    src: url('fonts/Aero.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* CSS Variables */
 :root {
     --primary-red: #ff1a1a;
@@ -22,7 +39,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Aero', sans-serif;
     line-height: 1.6;
     color: #fff;
     background-color: #000;
@@ -103,7 +120,7 @@ body {
 }
 
 .hero-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Aero', sans-serif;
     font-size: clamp(24px, 4vw, 48px);
     font-weight: 900;
     text-transform: uppercase;
@@ -121,7 +138,7 @@ body {
 }
 
 .hero-subtitle {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Designer', sans-serif;
     font-size: clamp(20px, 3.5vw, 36px);
     font-weight: 700;
     text-transform: uppercase;
@@ -136,9 +153,10 @@ body {
 }
 
 .hero-description {
+    font-family: 'Avenir', sans-serif;
     font-size: clamp(16px, 2.8vw, 32px);
-    font-style: italic;
-    font-weight: 400;
+    font-style: normal;
+    font-weight: 300;
     margin: clamp(20px, 4vw, 40px) auto clamp(40px, 6vw, 60px);
     opacity: 0.95;
     max-width: 90%;
@@ -200,7 +218,7 @@ body {
     backdrop-filter: blur(15px);
     border: 3px solid rgba(255, 255, 255, 0.2);
     z-index: 20;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Designer', sans-serif;
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1.2px;
@@ -340,15 +358,15 @@ body {
 }
 
 .section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(28px, 4vw, 36px);
+    font-family: 'Designer', sans-serif;
+    font-size: clamp(32px, 5vw, 42px);
     font-weight: 900;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
     margin-bottom: 40px;
     color: #fff;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.9);
 }
 
 .about-content {
@@ -357,7 +375,7 @@ body {
     gap: clamp(20px, 5vw, 50px);
     align-items: center;
     background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
-    padding: clamp(30px, 6vw, 70px);
+    padding: clamp(20px, 4vw, 50px);
     border-radius: clamp(20px, 3vw, 30px);
     box-shadow: 0 20px 60px var(--primary-red-alpha-30);
 }
@@ -378,13 +396,16 @@ body {
 }
 
 .about-text {
-    font-size: 16px;
+    font-family: 'Avenir', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
     line-height: 1.7;
 }
 
 .highlight {
-    font-size: 20px;
-    font-weight: bold;
+    font-family: 'Avenir', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
     font-style: italic;
     margin-bottom: 25px;
     color: #fecaca;
@@ -478,6 +499,8 @@ body {
 }
 
 .testimonial-text p {
+    font-family: 'Avenir', sans-serif;
+    font-weight: 300;
     font-style: italic;
     font-size: 16px;
     line-height: 1.5;
@@ -486,7 +509,8 @@ body {
 }
 
 .testimonial-author {
-    font-weight: bold;
+    font-family: 'Avenir', sans-serif;
+    font-weight: 400;
     font-size: 14px;
     color: var(--primary-red);
 }
@@ -510,14 +534,14 @@ body {
 }
 
 .contact-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(24px, 4vw, 36px);
+    font-family: 'Designer', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: #fff;
     margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.9);
 }
 
 .contact .container {
@@ -562,7 +586,7 @@ body {
 }
 
 .social-label {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Designer', sans-serif;
     font-size: clamp(11px, 1.2vw, 15px);
     font-weight: bold;
     text-transform: uppercase;
