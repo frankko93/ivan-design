@@ -398,8 +398,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const socialLinks = {
         instagram: 'https://www.instagram.com/ivandesign33',
-        whatsapp: 'https://wa.me/+5491123456789', // Replace with actual WhatsApp number
-        tiktok: 'https://tiktok.com/@ivandesign33' // Replace with actual TikTok username
+        whatsapp: 'https://wa.me/5492645679934',
+        tiktok: 'https://www.tiktok.com/@pittstopok?_t=ZM-903kEsjRG0K&_r=1'
     };
     
     socialCards.forEach(card => {
