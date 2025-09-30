@@ -128,7 +128,7 @@
                     TU CASCO HABLA POR VOS EN LA PISTA
                 </h2>
                 <h3 class="hero-subtitle">
-                    ¿ QUE DICE EL TUYO ?
+                    ¿ QUÉ DICE EL TUYO ?
                 </h3>
                 <p class="hero-description">
                     "Tu identidad de piloto, transformada en un diseño único."
@@ -155,12 +155,14 @@
     <!-- About Section -->
     <section id="servicios" class="about">
         <div class="container">
-            <h2 class="section-title">BIENVENIDOS A IVAN DESING</h2>
+            <h2 class="section-title">BIENVENIDOS A IVAN DESIGN</h2>
             <div class="about-content">
-                <div class="about-logo">
-                    <img src="img/logo1.png" alt="Ivan Design Shield Logo">
+                <div class="about-photo-container">
+                    <img src="img/ivan.png" alt="Iván - Fundador de Ivan Design" class="ivan-photo">
+                    <div class="floating-logo">
+                        <img src="img/logo1.png" alt="Ivan Design Shield Logo">
+                    </div>
                 </div>
-                <div class="about-separator"></div>
                 <div class="about-text">
                     <p class="highlight">
                         "Iván creció rodeado de motores, velocidad y pasión por el automovilismo."
@@ -208,6 +210,19 @@
         </div>
     </section>
 
+     <!-- Gallery Carousel Section -->
+     <section class="gallery-carousel">
+        <!-- <div class="gallery-header">
+            <h2 class="gallery-title">NUESTROS DISEÑOS</h2>
+        </div> -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Las imágenes se generarán automáticamente con JavaScript -->
+            </div>
+        </div>
+        <div class="carousel-overlay"></div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contacto" class="contact">
         <div class="contact-header">
@@ -252,15 +267,42 @@
         </div>
     </section>
 
+    <!-- Brands Section -->
+    <section class="brands">
+        <div class="brands-header">
+            <h2 class="brands-title">MARCAS QUE TRABAJAMOS</h2>
+        </div>
+        <div class="container">
+            <div class="brands-container">
+                <div class="brand-logo">
+                    <img src="img/arai.png" alt="Arai Helmet Logo" class="brand-image">
+                </div>
+                <div class="brand-logo">
+                    <img src="img/bell.svg" alt="Bell Helmet Logo" class="brand-image">
+                </div>
+                <div class="brand-logo">
+                    <img src="img/stilo.svg" alt="Stilo Logo" class="brand-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-stripe footer-stripe-1"></div>
         <div class="footer-stripe footer-stripe-2"></div>
-        <div class="footer-stripe footer-stripe-3"></div>
         <div class="footer-logo-center">
             <img src="img/logo2.png" alt="Ivan Design Logo" class="footer-logo-img">
         </div>
     </footer>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="" class="modal-image">
+        </div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>

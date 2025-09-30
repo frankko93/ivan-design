@@ -422,3 +422,140 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Smart Carousel System
+function initializeSmartCarousel() {
+    // Configuración de imágenes - Solo agrega aquí las imágenes que tienes
+    const images = [
+        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
+        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
+        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
+        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
+        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
+        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
+        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
+        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' }
+        // Agrega más imágenes aquí cuando las tengas:
+        // { src: 'img/3.jpg', alt: 'Diseño de casco personalizado 3' },
+        // { src: 'img/4.jpg', alt: 'Diseño de casco personalizado 4' },
+        // { src: 'img/5.jpg', alt: 'Diseño de casco personalizado 5' },
+        // { src: 'img/6.jpg', alt: 'Diseño de casco personalizado 6' }
+    ];
+    
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselContainer = document.querySelector('.carousel-container');
+    
+    if (!carouselTrack || images.length === 0) {
+        console.warn('Carrusel no encontrado o sin imágenes');
+        return;
+    }
+    
+    // Limpiar contenido existente
+    carouselTrack.innerHTML = '';
+    
+    // Configuración del carrusel
+    const minImagesForLoop = 4; // Mínimo de imágenes para hacer loop
+    const hasEnoughImages = images.length >= minImagesForLoop;
+    
+    if (hasEnoughImages) {
+        // MODO LOOP INFINITO - Suficientes imágenes
+        console.log(`Modo LOOP: ${images.length} imágenes detectadas (≥${minImagesForLoop})`);
+        
+        // Crear el primer set de imágenes
+        images.forEach((image, index) => {
+            const slide = createCarouselSlide(image.src, image.alt, index + 1);
+            carouselTrack.appendChild(slide);
+        });
+        
+        // Crear el segundo set (duplicado) para el loop perfecto
+        images.forEach((image, index) => {
+            const slide = createCarouselSlide(image.src, image.alt, index + 1);
+            carouselTrack.appendChild(slide);
+        });
+        
+        // Aplicar animación de loop
+        carouselTrack.style.animation = 'carousel-scroll 30s linear infinite';
+        carouselContainer.classList.add('carousel-loop-mode');
+        
+        console.log(`Carrusel LOOP inicializado con ${images.length} imágenes únicas`);
+        
+    } else {
+        // MODO ESTÁTICO - Pocas imágenes
+        console.log(`Modo ESTÁTICO: ${images.length} imágenes detectadas (<${minImagesForLoop})`);
+        
+        // Crear solo un set de imágenes
+        images.forEach((image, index) => {
+            const slide = createCarouselSlide(image.src, image.alt, index + 1);
+            carouselTrack.appendChild(slide);
+        });
+        
+        // Remover animación y centrar
+        carouselTrack.style.animation = 'none';
+        carouselTrack.style.justifyContent = 'center';
+        carouselContainer.classList.add('carousel-static-mode');
+        
+        console.log(`Carrusel ESTÁTICO inicializado con ${images.length} imágenes`);
+    }
+}
+
+function createCarouselSlide(imageSrc, imageAlt, index) {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    slide.onclick = () => openModal(imageSrc, imageAlt);
+    
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.alt = imageAlt;
+    img.className = 'carousel-image';
+    
+    slide.appendChild(img);
+    return slide;
+}
+
+// Inicializar el carrusel cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSmartCarousel();
+});
+
+// Image Modal Functions
+function openModal(imageSrc, imageAlt) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    modal.style.display = 'block';
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+    
+    // Add escape key listener
+    document.addEventListener('keydown', handleEscapeKey);
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+    
+    // Remove escape key listener
+    document.removeEventListener('keydown', handleEscapeKey);
+}
+
+function handleEscapeKey(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+}
+
+// Close modal when clicking outside the image
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('imageModal');
+    const modalContent = document.querySelector('.modal-content');
+    
+    if (event.target === modal && !modalContent.contains(event.target)) {
+        closeModal();
+    }
+});
