@@ -554,3 +554,130 @@ document.addEventListener('click', function(event) {
         closeModal();
     }
 });
+
+// Touch Swipe Functionality for Gallery Carousel
+document.addEventListener('DOMContentLoaded', function() {
+    const carouselContainer = document.querySelector('.carousel-container');
+    const carouselTrack = document.getElementById('carouselTrack');
+    
+    if (!carouselContainer || !carouselTrack) return;
+    
+    let startX = 0;
+    let scrollLeft = 0;
+    let isDown = false;
+    let velocity = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    
+    // Enable horizontal scrolling on touch devices
+    carouselContainer.style.overflowX = 'auto';
+    carouselContainer.style.cursor = 'grab';
+    carouselContainer.style.userSelect = 'none';
+    carouselContainer.style.webkitOverflowScrolling = 'touch';
+    
+    // Hide scrollbar
+    const style = document.createElement('style');
+    style.textContent = `
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+        .carousel-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Mouse/Touch start
+    carouselContainer.addEventListener('mousedown', startDragging);
+    carouselContainer.addEventListener('touchstart', startDragging, { passive: true });
+    
+    // Mouse/Touch move
+    carouselContainer.addEventListener('mousemove', drag);
+    carouselContainer.addEventListener('touchmove', drag, { passive: true });
+    
+    // Mouse/Touch end
+    carouselContainer.addEventListener('mouseup', stopDragging);
+    carouselContainer.addEventListener('mouseleave', stopDragging);
+    carouselContainer.addEventListener('touchend', stopDragging);
+    
+    function startDragging(e) {
+        isDown = true;
+        carouselContainer.style.cursor = 'grabbing';
+        
+        // Pause animation when interacting
+        if (carouselTrack.style.animation) {
+            carouselTrack.style.animationPlayState = 'paused';
+        }
+        
+        const pageX = e.type.includes('touch') ? e.touches[0].pageX : e.pageX;
+        startX = pageX - carouselContainer.offsetLeft;
+        scrollLeft = carouselContainer.scrollLeft;
+        lastX = pageX;
+        lastTime = Date.now();
+        velocity = 0;
+    }
+    
+    function drag(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        
+        const pageX = e.type.includes('touch') ? e.touches[0].pageX : e.pageX;
+        const x = pageX - carouselContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        
+        // Calculate velocity for momentum
+        const currentTime = Date.now();
+        const timeDiff = currentTime - lastTime;
+        if (timeDiff > 0) {
+            velocity = (pageX - lastX) / timeDiff;
+        }
+        lastX = pageX;
+        lastTime = currentTime;
+        
+        carouselContainer.scrollLeft = scrollLeft - walk;
+    }
+    
+    function stopDragging() {
+        if (!isDown) return;
+        isDown = false;
+        carouselContainer.style.cursor = 'grab';
+        
+        // Resume animation after a delay
+        setTimeout(() => {
+            if (carouselTrack.style.animation) {
+                carouselTrack.style.animationPlayState = 'running';
+            }
+        }, 2000);
+        
+        // Apply momentum scrolling
+        if (Math.abs(velocity) > 0.5) {
+            let momentum = velocity * 100;
+            const startScroll = carouselContainer.scrollLeft;
+            const startTime = Date.now();
+            const duration = 500; // Momentum duration in ms
+            
+            function momentumScroll() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easing = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+                
+                carouselContainer.scrollLeft = startScroll - (momentum * easing);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(momentumScroll);
+                }
+            }
+            
+            requestAnimationFrame(momentumScroll);
+        }
+    }
+    
+    // Prevent click events during drag
+    carouselContainer.addEventListener('click', function(e) {
+        if (Math.abs(velocity) > 0.5) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
+});
