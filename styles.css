@@ -741,21 +741,14 @@ body {
     width: clamp(80px, 12vw, 140px);
     height: clamp(80px, 12vw, 140px);
     background: rgba(255, 255, 255, 0.9);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 50%;
     flex-shrink: 0;
     position: relative;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     border: 2px solid rgba(255, 255, 255, 1);
-}
-
-.testimonial-avatar::after {
-    content: '👤';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(24px, 4vw, 36px);
-    color: #666;
 }
 
 .testimonial-text {
@@ -899,54 +892,79 @@ body {
 
 
 
+/* Helmet Gallery Section */
+.helmet-gallery {
+    display: flex;
+    width: 100%;
+    height: clamp(300px, 40vh, 500px);
+    position: relative;
+    overflow: hidden;
+}
+
+.helmet-photo {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.helmet-photo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+}
+
+.helmet-photo:last-child::after {
+    display: none;
+}
+
+.helmet-photo:hover {
+    flex: 1.5;
+    filter: brightness(1.1);
+}
+
 /* Brands Section */
 .brands {
     background: transparent;
     position: relative;
-    padding-top: 30px;
+    padding: 0;
+    margin: clamp(30px, 5vh, 60px) 0;
 }
 
-.brands-header {
+.brands-stripe {
     background: linear-gradient(to right, 
         rgba(255, 26, 26, 0) 0%, 
-        var(--primary-red) 20%, 
-        var(--primary-red) 80%, 
+        var(--primary-red) 15%, 
+        var(--primary-red) 85%, 
         rgba(255, 26, 26, 0) 100%);
-    padding: 10px 0;
-    text-align: center;
-    position: relative;
-}
-
-.brands-title {
-    font-family: 'Designer', sans-serif;
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #fff;
-    margin: 0;
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.9);
-}
-
-.brands .container {
-    padding: clamp(25px, 4vw, 40px) clamp(20px, 4vw, 50px);
+    padding: clamp(12px, 2vw, 20px) 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .brands-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: clamp(10px, 3vw, 30px);
+    gap: clamp(40px, 8vw, 100px);
     max-width: 100%;
     margin: 0 auto;
     flex-wrap: nowrap;
-    padding: 0 clamp(10px, 2vw, 20px);
+    padding: 0 clamp(20px, 4vw, 40px);
 }
 
 .brand-logo {
     background: transparent;
     border-radius: 0;
-    padding: clamp(10px, 2vw, 15px);
+    padding: 0;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
@@ -954,26 +972,24 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(8px, 1.5vw, 12px);
     position: relative;
 }
 
 .brand-logo:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.1);
 }
 
 .brand-image {
-    width: clamp(80px, 12vw, 120px);
+    width: clamp(100px, 15vw, 150px);
     height: auto;
-    max-height: clamp(60px, 8vw, 80px);
+    max-height: clamp(70px, 10vw, 100px);
     object-fit: contain;
-    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4)) brightness(1.1);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .brand-logo:hover .brand-image {
-    transform: scale(1.1);
-    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6)) brightness(1.2);
 }
 
 /* Footer */
@@ -982,7 +998,7 @@ body {
     height: 200px;
     background: transparent;
     overflow: hidden;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .footer-stripe {
@@ -1019,6 +1035,50 @@ body {
     height: 12rem;
     object-fit: contain;
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* Copyright Footer */
+.copyright-footer {
+    background: #000;
+    padding: clamp(15px, 3vh, 25px) clamp(15px, 3vw, 30px);
+    text-align: center;
+    border-top: 1px solid rgba(255, 26, 26, 0.3);
+}
+
+.copyright-footer p {
+    font-family: 'Avenir', sans-serif;
+    font-size: clamp(12px, 1.5vw, 14px);
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.copyright-footer a {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.copyright-footer a:hover {
+    color: var(--primary-red-lighter);
+    text-shadow: 0 0 10px var(--primary-red-alpha-50);
+}
+
+.copyright-footer a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: var(--primary-red);
+    transition: width 0.3s ease;
+}
+
+.copyright-footer a:hover::after {
+    width: 100%;
 }
 
 /* Animations */
@@ -1211,14 +1271,22 @@ body {
         font-size: 30px;
     }
     
+    .helmet-gallery {
+        height: clamp(200px, 30vh, 350px);
+    }
+
+    .helmet-photo::after {
+        width: 50px;
+    }
+
     .brands-container {
-        gap: clamp(8px, 2vw, 20px);
-        padding: 0 clamp(5px, 1vw, 10px);
+        gap: clamp(20px, 5vw, 40px);
+        padding: 0 clamp(10px, 2vw, 20px);
     }
     
     .brand-image {
-        width: clamp(70px, 10vw, 100px);
-        max-height: clamp(50px, 7vw, 70px);
+        width: clamp(80px, 12vw, 110px);
+        max-height: clamp(60px, 8vw, 80px);
     }
     
     .testimonials {
@@ -1251,7 +1319,7 @@ body {
     
     .footer {
         height: clamp(140px, 20vh, 180px);
-        margin-bottom: 30px;
+        margin-bottom: 15px;
     }
     
     .footer-logo-img {
@@ -1341,14 +1409,39 @@ body {
         font-size: 25px;
     }
     
+    .helmet-gallery {
+        height: clamp(150px, 25vh, 250px);
+        flex-direction: column;
+    }
+
+    .helmet-photo {
+        flex: 1;
+    }
+
+    .helmet-photo::after {
+        width: 100%;
+        height: 50px;
+        top: auto;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    }
+
+    .helmet-photo:hover {
+        flex: 1.3;
+    }
+
+    .brands-stripe {
+        padding: clamp(10px, 2vw, 18px) 0;
+    }
+
     .brands-container {
-        gap: clamp(5px, 1.5vw, 15px);
-        padding: 0 clamp(2px, 0.5vw, 5px);
+        gap: clamp(15px, 4vw, 30px);
+        padding: 0 clamp(10px, 2vw, 15px);
     }
     
     .brand-image {
-        width: clamp(60px, 8vw, 80px);
-        max-height: clamp(40px, 6vw, 60px);
+        width: clamp(70px, 10vw, 90px);
+        max-height: clamp(50px, 7vw, 70px);
     }
     
     .about {
@@ -1393,13 +1486,9 @@ body {
         height: clamp(70px, 15vw, 90px);
     }
     
-    .testimonial-avatar::after {
-        font-size: clamp(20px, 4vw, 28px);
-    }
-    
     .footer {
         height: clamp(100px, 16vh, 130px);
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     
     .footer-logo-img {

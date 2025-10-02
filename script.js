@@ -425,21 +425,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Smart Carousel System
 function initializeSmartCarousel() {
-    // Configuración de imágenes - Solo agrega aquí las imágenes que tienes
+    // Images from img/cascos/ folder
     const images = [
-        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
-        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
-        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
-        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
-        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
-        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' },
-        { src: 'img/1.jpg', alt: 'Diseño de casco personalizado 1' },
-        { src: 'img/2.jpg', alt: 'Diseño de casco personalizado 2' }
-        // Agrega más imágenes aquí cuando las tengas:
-        // { src: 'img/3.jpg', alt: 'Diseño de casco personalizado 3' },
-        // { src: 'img/4.jpg', alt: 'Diseño de casco personalizado 4' },
-        // { src: 'img/5.jpg', alt: 'Diseño de casco personalizado 5' },
-        // { src: 'img/6.jpg', alt: 'Diseño de casco personalizado 6' }
+        { src: 'img/cascos/IMG_9366.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9668.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9710.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9729.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9737.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9855.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9856.jpg', alt: 'Diseño de casco personalizado Ivan Design' },
+        { src: 'img/cascos/IMG_9857.jpg', alt: 'Diseño de casco personalizado Ivan Design' }
     ];
     
     const carouselTrack = document.getElementById('carouselTrack');
