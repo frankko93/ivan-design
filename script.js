@@ -4,57 +4,50 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // YouTube Player API Integration
-    let youtubePlayer = null;
+    // Wistia Player API Integration
+    let wistiaPlayer = null;
     const unmuteButton = document.getElementById('unmute-btn');
     let isMuted = true;
 
     // Initialize button state
     unmuteButton.classList.add('muted');
 
-    // YouTube API ready function
-    window.onYouTubeIframeAPIReady = function() {
-        youtubePlayer = new YT.Player('youtube-player', {
-            width: '100%',
-            height: '100%',
-            videoId: 'UZrh5BDQKlw', // Your video ID
-            playerVars: {
-                autoplay: 1,
-                mute: 1,
-                loop: 1,
-                playlist: 'UZrh5BDQKlw',
-                controls: 1,
-                showinfo: 0,
-                rel: 0,
-                modestbranding: 1,
-                iv_load_policy: 3
-            },
-            events: {
-                onReady: onPlayerReady,
-                onStateChange: onPlayerStateChange
-            }
-        });
-    };
+    // Initialize Wistia Player
+    window._wq = window._wq || [];
+    _wq.push({
+        id: "oja8shuuvb",
+        options: {
+            autoPlay: true,
+            muted: true,
+            controlsVisibleOnLoad: true,
+            playbar: true,
+            playButton: true,
+            settingsControl: true,
+            volumeControl: true,
+            fullscreenButton: true,
+            qualityControl: true,
+            playbackRateControl: true
+        },
+        onReady: function(video) {
+            wistiaPlayer = video;
+            console.log('Wistia player ready');
+            
+            // Ensure video starts muted and playing
+            video.mute();
+            video.play();
+        }
+    });
 
-    function onPlayerReady(event) {
-        // Player is ready
-        console.log('YouTube player ready');
-    }
-
-    function onPlayerStateChange(event) {
-        // Handle player state changes if needed
-    }
-
-    // Unmute Button Functionality with real YouTube control
+    // Unmute Button Functionality with real Wistia control
     unmuteButton.addEventListener('click', function() {
-        if (!youtubePlayer) {
+        if (!wistiaPlayer) {
             showNotification('Player no está listo aún...');
             return;
         }
 
         if (isMuted) {
             // Unmute the video
-            youtubePlayer.unMute();
+            wistiaPlayer.unmute();
             isMuted = false;
             
             // Switch to unmuted state
@@ -84,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
         } else {
             // Mute the video (in case they want to mute again)
-            youtubePlayer.mute();
+            wistiaPlayer.mute();
             isMuted = true;
             
             // Switch to muted state
@@ -360,6 +353,8 @@ document.addEventListener('DOMContentLoaded', function() {
         'color: #dc2626; font-size: 16px; font-weight: bold;');
     console.log('%cDiseñado para la velocidad y la pasión del automovilismo', 
         'color: #666; font-style: italic;');
+    console.log('%cVideo powered by Wistia', 
+        'color: #54bbff; font-size: 12px;');
 
 });
 
