@@ -149,76 +149,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // CTA Button functionality
     const ctaButton = document.querySelector('.cta-button');
-    ctaButton.addEventListener('click', function() {
-        // Add click animation
-        this.style.transform = 'translateY(-3px) scale(0.95)';
-        
-        setTimeout(() => {
-            this.style.transform = 'translateY(-3px)';
-        }, 150);
-        
-        // Scroll to contact section
-        const contactSection = document.querySelector('#contacto');
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const targetPosition = contactSection.offsetTop - headerHeight;
-        
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-    });
-
-    // Contact items click functionality
-    const contactItems = document.querySelectorAll('.contact-item');
-    contactItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const title = this.querySelector('h3').textContent;
-            
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function() {
             // Add click animation
-            this.style.transform = 'translateY(-10px) scale(0.98)';
+            this.style.transform = 'translateY(-3px) scale(0.95)';
             
             setTimeout(() => {
-                this.style.transform = 'translateY(-10px)';
+                this.style.transform = 'translateY(-3px)';
             }, 150);
             
-            // Simulate opening social media or contact
-            if (title.includes('INSTAGRAM')) {
-                // Simulate Instagram opening
-                showNotification('Abriendo Instagram... @ivandesign');
-            } else if (title.includes('WSP')) {
-                // Simulate WhatsApp opening
-                showNotification('Abriendo WhatsApp... +54 9 11 1234-5678');
-            } else if (title.includes('TIKTOK')) {
-                // Simulate TikTok opening
-                showNotification('Abriendo TikTok... @ivandesign');
+            // Scroll to contact section
+            const contactSection = document.querySelector('#contacto');
+            if (contactSection) {
+                // Use hero header height instead of non-existent .header
+                const heroHeader = document.querySelector('.hero-header');
+                const headerHeight = heroHeader ? heroHeader.offsetHeight : 0;
+                const targetPosition = contactSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
             }
         });
-    });
+    }
 
-    // Testimonial cards hover effect
-    const testimonialCards = document.querySelectorAll('.testimonial-card');
-    testimonialCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
+    // Contact cards functionality is handled by the existing social media links code below
+    // (No need for this code as contact-item class doesn't exist - now using contact-card)
+
+    // Testimonial pills hover effect (updated to use correct class)
+    const testimonialPills = document.querySelectorAll('.testimonial-pill');
+    testimonialPills.forEach(pill => {
+        pill.addEventListener('mouseenter', function() {
             // Add subtle glow effect
-            this.style.boxShadow = '0 20px 40px rgba(220,38,38,0.3), 0 0 20px rgba(220,38,38,0.1)';
+            this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3)';
         });
         
-        card.addEventListener('mouseleave', function() {
-            this.style.boxShadow = '0 20px 40px rgba(220,38,38,0.2)';
+        pill.addEventListener('mouseleave', function() {
+            this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
         });
     });
 
-    // Logo animation on page load
-    const logoImg = document.querySelector('.logo-img');
-    const footerLogo = document.querySelector('.footer-logo img');
-    
-    // Add rotation animation
-    setTimeout(() => {
-        logoImg.style.animation = 'logoSpin 2s ease-in-out';
-        if (footerLogo) {
-            footerLogo.style.animation = 'logoSpin 2s ease-in-out';
-        }
-    }, 500);
+    // Logo animation removed per user preference
 
     // Random testimonial rotation
     let testimonialIndex = 0;
