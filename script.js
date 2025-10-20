@@ -145,35 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // Video placeholder click functionality
-    const videoPlaceholder = document.querySelector('.video-placeholder');
-    const playButton = document.querySelector('.play-button');
-    
-    videoPlaceholder.addEventListener('click', function() {
-        // Add pulse animation
-        playButton.style.animation = 'pulse 0.3s ease';
-        
-        // Simulate video loading
-        this.style.background = 'rgba(220, 38, 38, 0.2)';
-        
-        // Show loading message
-        const videoText = this.querySelector('.video-text');
-        const originalText = videoText.textContent;
-        videoText.textContent = 'CARGANDO VIDEO...';
-        
-        setTimeout(() => {
-            videoText.textContent = 'VIDEO NO DISPONIBLE';
-            setTimeout(() => {
-                videoText.textContent = originalText;
-                videoPlaceholder.style.background = 'rgba(255,255,255,0.1)';
-            }, 2000);
-        }, 1500);
-        
-        // Reset animation
-        setTimeout(() => {
-            playButton.style.animation = '';
-        }, 300);
-    });
+    // Video placeholder functionality removed - now using Wistia player
 
     // CTA Button functionality
     const ctaButton = document.querySelector('.cta-button');
