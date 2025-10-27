@@ -158,19 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = 'translateY(-3px)';
             }, 150);
             
-            // Scroll to contact section
-            const contactSection = document.querySelector('#contacto');
-            if (contactSection) {
-                // Use hero header height instead of non-existent .header
-                const heroHeader = document.querySelector('.hero-header');
-                const headerHeight = heroHeader ? heroHeader.offsetHeight : 0;
-                const targetPosition = contactSection.offsetTop - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
+            // Redirect to WhatsApp with personalized message
+            const whatsappMessage = encodeURIComponent('¡Hola! Me interesa obtener asesoramiento sobre cascos personalizados');
+            const whatsappUrl = `https://wa.me/5492645679934?text=${whatsappMessage}`;
+            window.open(whatsappUrl, '_blank');
         });
     }
 
@@ -337,8 +328,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const socialLinks = {
         instagram: 'https://www.instagram.com/ivandesign33',
-        whatsapp: 'https://wa.me/5492645679934',
-        tiktok: 'https://www.tiktok.com/@pittstopok?_t=ZM-903kEsjRG0K&_r=1'
+        whatsapp: 'https://wa.me/5492645679934?text=' + encodeURIComponent('¡Hola! Me interesa obtener asesoramiento sobre cascos personalizados'),
+        tiktok: 'https://www.tiktok.com/@ivandesign33?is_from_webapp=1&sender_device=pc'
     };
     
     socialCards.forEach(card => {
